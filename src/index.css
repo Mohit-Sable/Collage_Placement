@@ -1,0 +1,266 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* College Placement Management System Design System
+   Professional, Academic, Modern */
+
+@layer base {
+  :root {
+    /* Primary - Deep Navy Blue (trust, professionalism) */
+    --primary: 213 56% 24%;
+    --primary-foreground: 210 40% 98%;
+
+    /* Background - Clean whites with subtle warmth */
+    --background: 210 20% 99%;
+    --foreground: 213 40% 16%;
+
+    /* Card - Crisp white for contrast */
+    --card: 0 0% 100%;
+    --card-foreground: 213 40% 16%;
+
+    /* Popover */
+    --popover: 0 0% 100%;
+    --popover-foreground: 213 40% 16%;
+
+    /* Secondary - Slate blue-gray */
+    --secondary: 210 18% 94%;
+    --secondary-foreground: 213 40% 20%;
+
+    /* Muted - Soft gray for subtle elements */
+    --muted: 210 18% 96%;
+    --muted-foreground: 213 16% 46%;
+
+    /* Accent - Teal for modern tech feel */
+    --accent: 174 62% 47%;
+    --accent-foreground: 0 0% 100%;
+
+    /* Success - Green for positive states */
+    --success: 142 72% 40%;
+    --success-foreground: 0 0% 100%;
+
+    /* Warning - Amber for CTAs and attention */
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+
+    /* Destructive */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Border and Input */
+    --border: 214 20% 90%;
+    --input: 214 20% 90%;
+    --ring: 213 56% 24%;
+
+    --radius: 0.625rem;
+
+    /* Sidebar */
+    --sidebar-background: 213 56% 20%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 174 62% 47%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 213 50% 28%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 213 50% 32%;
+    --sidebar-ring: 174 62% 47%;
+
+    /* Custom gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(213 56% 24%) 0%, hsl(213 56% 32%) 50%, hsl(174 62% 40%) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(210 20% 98%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(174 62% 47%) 0%, hsl(174 62% 55%) 100%);
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 hsl(213 40% 16% / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(213 40% 16% / 0.08), 0 2px 4px -2px hsl(213 40% 16% / 0.05);
+    --shadow-lg: 0 10px 15px -3px hsl(213 40% 16% / 0.1), 0 4px 6px -4px hsl(213 40% 16% / 0.05);
+    --shadow-xl: 0 20px 25px -5px hsl(213 40% 16% / 0.12), 0 8px 10px -6px hsl(213 40% 16% / 0.08);
+    --shadow-glow: 0 0 20px hsl(174 62% 47% / 0.3);
+  }
+
+  .dark {
+    --primary: 174 62% 47%;
+    --primary-foreground: 213 40% 10%;
+
+    --background: 213 56% 10%;
+    --foreground: 210 40% 98%;
+
+    --card: 213 50% 14%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 213 50% 14%;
+    --popover-foreground: 210 40% 98%;
+
+    --secondary: 213 45% 20%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 213 45% 18%;
+    --muted-foreground: 213 20% 60%;
+
+    --accent: 174 62% 47%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 213 45% 22%;
+    --input: 213 45% 22%;
+    --ring: 174 62% 47%;
+
+    --sidebar-background: 213 56% 8%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 174 62% 47%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 213 50% 18%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 213 50% 22%;
+    --sidebar-ring: 174 62% 47%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading tracking-tight;
+  }
+}
+
+@layer components {
+  /* Hero gradient background */
+  .bg-hero-gradient {
+    background: var(--gradient-hero);
+  }
+
+  /* Card gradient */
+  .bg-card-gradient {
+    background: var(--gradient-card);
+  }
+
+  /* Accent gradient */
+  .bg-accent-gradient {
+    background: var(--gradient-accent);
+  }
+
+  /* Glass effect */
+  .glass {
+    @apply bg-white/80 backdrop-blur-lg border border-white/20;
+  }
+
+  /* Smooth shadow transitions */
+  .shadow-smooth {
+    box-shadow: var(--shadow-md);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  .shadow-smooth:hover {
+    box-shadow: var(--shadow-xl);
+    transform: translateY(-2px);
+  }
+
+  /* Glow effect */
+  .glow {
+    box-shadow: var(--shadow-glow);
+  }
+
+  /* Role cards styling */
+  .role-card {
+    @apply relative overflow-hidden rounded-xl p-6 transition-all duration-300;
+    @apply bg-card border border-border;
+    box-shadow: var(--shadow-md);
+  }
+
+  .role-card:hover {
+    @apply border-accent;
+    box-shadow: var(--shadow-xl);
+    transform: translateY(-4px);
+  }
+
+  .role-card::before {
+    content: '';
+    @apply absolute top-0 left-0 right-0 h-1;
+    background: var(--gradient-accent);
+  }
+
+  /* Stat card */
+  .stat-card {
+    @apply bg-card rounded-xl p-5 border border-border;
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* Input focus ring */
+  .input-focus {
+    @apply focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2;
+  }
+}
+
+@layer utilities {
+  /* Text gradients */
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-hero);
+  }
+
+  .text-gradient-accent {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-accent);
+  }
+
+  /* Animate in */
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.4s ease-out forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slideUp {
+    from { 
+      opacity: 0; 
+      transform: translateY(20px); 
+    }
+    to { 
+      opacity: 1; 
+      transform: translateY(0); 
+    }
+  }
+
+  @keyframes scaleIn {
+    from { 
+      opacity: 0; 
+      transform: scale(0.95); 
+    }
+    to { 
+      opacity: 1; 
+      transform: scale(1); 
+    }
+  }
+
+  /* Stagger children */
+  .stagger-children > * {
+    @apply animate-slide-up;
+    animation-fill-mode: backwards;
+  }
+
+  .stagger-children > *:nth-child(1) { animation-delay: 0.1s; }
+  .stagger-children > *:nth-child(2) { animation-delay: 0.2s; }
+  .stagger-children > *:nth-child(3) { animation-delay: 0.3s; }
+  .stagger-children > *:nth-child(4) { animation-delay: 0.4s; }
+  .stagger-children > *:nth-child(5) { animation-delay: 0.5s; }
+}

@@ -8,7 +8,7 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     allowedHosts: [
-      "collage-placement.onrender.com"
+      "college-placement-platform.onrender.com"
     ],
     port: 8080,
     hmr: {

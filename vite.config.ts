@@ -6,11 +6,14 @@ import { componentTagger } from "lovable-tagger";
 
 
 export default defineConfig(({ mode }) => ({
-  
   server: {
     allowedHosts: [
       "collage-placement.onrender.com"
-    ]
+    ],
+    port: 8080,
+    hmr: {
+      overlay: false,
+    },
   },
   plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
   resolve: {
@@ -19,3 +22,4 @@ export default defineConfig(({ mode }) => ({
     },
   },
 }));
+

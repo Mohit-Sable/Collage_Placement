@@ -16,11 +16,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { 
-  Building2, 
-  Briefcase, 
-  Users, 
-  Bell, 
+import {
+  Building2,
+  Briefcase,
+  Users,
+  Bell,
   LogOut,
   Plus,
   FileText,
@@ -152,9 +152,7 @@ const CompanyDashboard = () => {
 
   const navItems = [
     { path: "/company", label: "Dashboard", icon: Building2 },
-    { path: "/company/jobs", label: "Job Postings", icon: Briefcase },
-    { path: "/company/applications", label: "Applications", icon: FileText },
-    { path: "/company/candidates", label: "Candidates", icon: Users },
+
   ];
 
   const getStatusBadge = (status: string) => {
@@ -188,11 +186,10 @@ const CompanyDashboard = () => {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  location.pathname === item.path
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${location.pathname === item.path
                     ? "bg-primary text-primary-foreground"
                     : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                }`}
+                  }`}
               >
                 {item.label}
               </Link>
@@ -219,7 +216,7 @@ const CompanyDashboard = () => {
               Welcome, {profile?.company_name || "Company"}! 🏢
             </h2>
             <p className="text-muted-foreground">
-              {profile?.is_verified 
+              {profile?.is_verified
                 ? "Your company profile is verified. You can view student profiles and post jobs."
                 : "Your profile is pending verification by the placement office."}
             </p>
@@ -462,8 +459,8 @@ const CompanyDashboard = () => {
                 <div className="text-center py-8 text-muted-foreground">
                   <Briefcase className="h-12 w-12 mx-auto mb-3 opacity-50" />
                   <p>No job postings yet</p>
-                  <Button 
-                    variant="link" 
+                  <Button
+                    variant="link"
                     onClick={() => setIsJobDialogOpen(true)}
                     className="text-accent"
                   >

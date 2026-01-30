@@ -10,12 +10,12 @@ import { Plus, X } from "lucide-react";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { 
-  GraduationCap, 
-  Briefcase, 
-  FileText, 
-  Bell, 
-  User, 
+import {
+  GraduationCap,
+  Briefcase,
+  FileText,
+  Bell,
+  User,
   LogOut,
   Clock,
   CheckCircle2,
@@ -85,42 +85,39 @@ const StudentDashboard = () => {
 
   const navItems = [
     { path: "/student", label: "Dashboard", icon: GraduationCap },
-    { path: "/student/jobs", label: "Browse Jobs", icon: Briefcase },
-    { path: "/student/applications", label: "My Applications", icon: FileText },
-    { path: "/student/profile", label: "My Profile", icon: User },
   ];
 
   const queryClient = useQueryClient();
-const [skillInput, setSkillInput] = useState("");
+  const [skillInput, setSkillInput] = useState("");
 
-const updateSkillsMutation = useMutation({
-  mutationFn: async (skills: string[]) => {
-    await supabase
-      .from("student_profiles")
-      .update({ skills })
-      .eq("id", profile.id);
-  },
-  onSuccess: () => {
-    queryClient.invalidateQueries({ queryKey: ["studentProfile"] });
-    setSkillInput("");
-  },
-});
+  const updateSkillsMutation = useMutation({
+    mutationFn: async (skills: string[]) => {
+      await supabase
+        .from("student_profiles")
+        .update({ skills })
+        .eq("id", profile.id);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["studentProfile"] });
+      setSkillInput("");
+    },
+  });
 
-const addSkill = () => {
-  if (!skillInput.trim()) return;
-  if (profile?.skills?.includes(skillInput.trim())) return;
+  const addSkill = () => {
+    if (!skillInput.trim()) return;
+    if (profile?.skills?.includes(skillInput.trim())) return;
 
-  updateSkillsMutation.mutate([
-    ...(profile?.skills || []),
-    skillInput.trim(),
-  ]);
-};
+    updateSkillsMutation.mutate([
+      ...(profile?.skills || []),
+      skillInput.trim(),
+    ]);
+  };
 
-const removeSkill = (skill: string) => {
-  updateSkillsMutation.mutate(
-    profile.skills.filter((s: string) => s !== skill)
-  );
-};
+  const removeSkill = (skill: string) => {
+    updateSkillsMutation.mutate(
+      profile.skills.filter((s: string) => s !== skill)
+    );
+  };
 
 
   return (
@@ -143,11 +140,10 @@ const removeSkill = (skill: string) => {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  location.pathname === item.path
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${location.pathname === item.path
                     ? "bg-primary text-primary-foreground"
                     : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                }`}
+                  }`}
               >
                 {item.label}
               </Link>
@@ -173,40 +169,40 @@ const removeSkill = (skill: string) => {
             Welcome back, {profile?.full_name || "Student"}! 👋
           </h2>
           <p className="text-muted-foreground">
-            {profile?.is_verified 
+            {profile?.is_verified
               ? "Your profile is verified. You can apply to all available positions."
               : "Your profile is pending verification by the placement office."}
           </p>
         </div>
 
         {/* Small Skills Input */}
-<div className="flex flex-wrap items-center gap-2 mt-2">
-  
-  <div className="flex items-center gap-2">
-    <Input
-      value={skillInput}
-      onChange={(e) => setSkillInput(e.target.value)}
-      placeholder="Add skill"
-      className="h-8 w-32 text-sm"
-    />
-    <Button size="sm" onClick={addSkill}>
-      <Plus className="h-4 w-4" />
-    </Button>
-  </div>
-  {profile?.skills?.map((skill: string) => (
-    <Badge
-      key={skill}
-      variant="secondary"
-      className="flex items-center gap-1"
-    >
-      {skill}
-      <X
-        className="h-3 w-3 cursor-pointer"
-        onClick={() => removeSkill(skill)}
-      />
-    </Badge>
-  ))}
-</div> <br/>
+        <div className="flex flex-wrap items-center gap-2 mt-2">
+
+          <div className="flex items-center gap-2">
+            <Input
+              value={skillInput}
+              onChange={(e) => setSkillInput(e.target.value)}
+              placeholder="Add skill"
+              className="h-8 w-32 text-sm"
+            />
+            <Button size="sm" onClick={addSkill}>
+              <Plus className="h-4 w-4" />
+            </Button>
+          </div>
+          {profile?.skills?.map((skill: string) => (
+            <Badge
+              key={skill}
+              variant="secondary"
+              className="flex items-center gap-1"
+            >
+              {skill}
+              <X
+                className="h-3 w-3 cursor-pointer"
+                onClick={() => removeSkill(skill)}
+              />
+            </Badge>
+          ))}
+        </div> <br />
 
 
         {/* Stats Cards */}

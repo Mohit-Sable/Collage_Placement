@@ -9,6 +9,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import { useAuth } from "@/contexts/AuthContext";
 
 // Comprehensive Mock Data for Local Testing
 const mockStudents = [
@@ -33,7 +34,7 @@ const mockStudents = [
   { id: "18", full_name: "Meera Bhat", branch: "IT", year_of_graduation: "2025", cgpa: "9.1", is_verified: true, is_placed: true, placed_company: "Microsoft" },
   { id: "19", full_name: "Nikhil Agarwal", branch: "CSE", year_of_graduation: "2025", cgpa: "8.7", is_verified: true, is_placed: true, placed_company: "TCS" },
   { id: "20", full_name: "Pooja Saxena", branch: "ECE", year_of_graduation: "2025", cgpa: "8.5", is_verified: true, is_placed: true, placed_company: "Infosys" },
-  
+
   // Unplaced/In-Process Students
   { id: "21", full_name: "Abhishek Pandey", branch: "CSE", year_of_graduation: "2025", cgpa: "7.8", is_verified: true, is_placed: false, placed_company: null },
   { id: "22", full_name: "Neha Chauhan", branch: "IT", year_of_graduation: "2025", cgpa: "8.1", is_verified: true, is_placed: false, placed_company: null },
@@ -84,7 +85,7 @@ const mockApplications = [
   { id: "3", status: "accepted", student_profiles: { full_name: "Karthik Nair", email: "karthik@college.edu", branch: "CSE", is_placed: true, placed_company: "Google" }, job_postings: { title: "Backend Developer", company_profiles: { company_name: "Google" } } },
   { id: "4", status: "under_review", student_profiles: { full_name: "Abhishek Pandey", email: "abhishek@college.edu", branch: "CSE", is_placed: false, placed_company: null }, job_postings: { title: "Software Engineer", company_profiles: { company_name: "Google" } } },
   { id: "5", status: "applied", student_profiles: { full_name: "Simran Kaur", email: "simran@college.edu", branch: "CSE", is_placed: false, placed_company: null }, job_postings: { title: "Backend Developer", company_profiles: { company_name: "Google" } } },
-  
+
   // Microsoft Applications (4 placed, 3 in-process)
   { id: "6", status: "accepted", student_profiles: { full_name: "Priya Patel", email: "priya@college.edu", branch: "IT", is_placed: true, placed_company: "Microsoft" }, job_postings: { title: "Cloud Solutions Architect", company_profiles: { company_name: "Microsoft" } } },
   { id: "7", status: "accepted", student_profiles: { full_name: "Arjun Singh", email: "arjun@college.edu", branch: "CSE", is_placed: true, placed_company: "Microsoft" }, job_postings: { title: "Cloud Solutions Architect", company_profiles: { company_name: "Microsoft" } } },
@@ -93,34 +94,34 @@ const mockApplications = [
   { id: "10", status: "under_review", student_profiles: { full_name: "Neha Chauhan", email: "neha@college.edu", branch: "IT", is_placed: false, placed_company: null }, job_postings: { title: "Cloud Solutions Architect", company_profiles: { company_name: "Microsoft" } } },
   { id: "11", status: "applied", student_profiles: { full_name: "Kriti Shah", email: "kriti@college.edu", branch: "IT", is_placed: false, placed_company: null }, job_postings: { title: ".NET Developer", company_profiles: { company_name: "Microsoft" } } },
   { id: "12", status: "under_review", student_profiles: { full_name: "Manish Thakur", email: "manish@college.edu", branch: "IT", is_placed: false, placed_company: null }, job_postings: { title: "Cloud Solutions Architect", company_profiles: { company_name: "Microsoft" } } },
-  
+
   // Amazon Applications (3 placed, 2 in-process)
   { id: "13", status: "accepted", student_profiles: { full_name: "Sneha Reddy", email: "sneha@college.edu", branch: "ECE", is_placed: true, placed_company: "Amazon" }, job_postings: { title: "AWS DevOps Engineer", company_profiles: { company_name: "Amazon" } } },
   { id: "14", status: "accepted", student_profiles: { full_name: "Ishita Joshi", email: "ishita@college.edu", branch: "ECE", is_placed: true, placed_company: "Amazon" }, job_postings: { title: "AWS DevOps Engineer", company_profiles: { company_name: "Amazon" } } },
   { id: "15", status: "accepted", student_profiles: { full_name: "Siddharth Pillai", email: "siddharth@college.edu", branch: "CSE", is_placed: true, placed_company: "Amazon" }, job_postings: { title: "Frontend Developer", company_profiles: { company_name: "Amazon" } } },
   { id: "16", status: "applied", student_profiles: { full_name: "Harsh Mishra", email: "harsh@college.edu", branch: "ECE", is_placed: false, placed_company: null }, job_postings: { title: "AWS DevOps Engineer", company_profiles: { company_name: "Amazon" } } },
   { id: "17", status: "under_review", student_profiles: { full_name: "Yash Sinha", email: "yash@college.edu", branch: "ECE", is_placed: false, placed_company: null }, job_postings: { title: "Frontend Developer", company_profiles: { company_name: "Amazon" } } },
-  
+
   // TCS Applications (3 placed, 1 in-process)
   { id: "18", status: "accepted", student_profiles: { full_name: "Vikram Kumar", email: "vikram@college.edu", branch: "CSE", is_placed: true, placed_company: "TCS" }, job_postings: { title: "Full Stack Developer", company_profiles: { company_name: "TCS" } } },
   { id: "19", status: "accepted", student_profiles: { full_name: "Riya Desai", email: "riya@college.edu", branch: "IT", is_placed: true, placed_company: "TCS" }, job_postings: { title: "Systems Engineer", company_profiles: { company_name: "TCS" } } },
   { id: "20", status: "accepted", student_profiles: { full_name: "Nikhil Agarwal", email: "nikhil@college.edu", branch: "CSE", is_placed: true, placed_company: "TCS" }, job_postings: { title: "Full Stack Developer", company_profiles: { company_name: "TCS" } } },
   { id: "21", status: "applied", student_profiles: { full_name: "Tanvi Bhatt", email: "tanvi@college.edu", branch: "CSE", is_placed: false, placed_company: null }, job_postings: { title: "Systems Engineer", company_profiles: { company_name: "TCS" } } },
-  
+
   // Infosys Applications (3 placed, 1 in-process)
   { id: "22", status: "accepted", student_profiles: { full_name: "Ananya Gupta", email: "ananya@college.edu", branch: "IT", is_placed: true, placed_company: "Infosys" }, job_postings: { title: "Software Developer", company_profiles: { company_name: "Infosys" } } },
   { id: "23", status: "accepted", student_profiles: { full_name: "Rohan Das", email: "rohan@college.edu", branch: "CSE", is_placed: true, placed_company: "Infosys" }, job_postings: { title: "Software Developer", company_profiles: { company_name: "Infosys" } } },
   { id: "24", status: "accepted", student_profiles: { full_name: "Pooja Saxena", email: "pooja@college.edu", branch: "ECE", is_placed: true, placed_company: "Infosys" }, job_postings: { title: "Software Developer", company_profiles: { company_name: "Infosys" } } },
   { id: "25", status: "under_review", student_profiles: { full_name: "Shreya Bansal", email: "shreya@college.edu", branch: "ECE", is_placed: false, placed_company: null }, job_postings: { title: "Software Developer", company_profiles: { company_name: "Infosys" } } },
-  
+
   // Wipro Applications (2 placed, 1 in-process)
   { id: "26", status: "accepted", student_profiles: { full_name: "Diya Mehta", email: "diya@college.edu", branch: "IT", is_placed: true, placed_company: "Wipro" }, job_postings: { title: "Java Developer", company_profiles: { company_name: "Wipro" } } },
   { id: "27", status: "accepted", student_profiles: { full_name: "Kavya Iyer", email: "kavya@college.edu", branch: "ECE", is_placed: true, placed_company: "Wipro" }, job_postings: { title: "Java Developer", company_profiles: { company_name: "Wipro" } } },
   { id: "28", status: "applied", student_profiles: { full_name: "Gaurav Jain", email: "gaurav@college.edu", branch: "CSE", is_placed: false, placed_company: null }, job_postings: { title: "Java Developer", company_profiles: { company_name: "Wipro" } } },
-  
+
   // Cognizant Applications (1 placed)
   { id: "29", status: "accepted", student_profiles: { full_name: "Varun Kapoor", email: "varun@college.edu", branch: "CSE", is_placed: true, placed_company: "Cognizant" }, job_postings: { title: "Data Engineer", company_profiles: { company_name: "Cognizant" } } },
-  
+
   // Accenture Applications (1 placed)
   { id: "30", status: "accepted", student_profiles: { full_name: "Anjali Malhotra", email: "anjali@college.edu", branch: "ECE", is_placed: true, placed_company: "Accenture" }, job_postings: { title: "Technology Analyst", company_profiles: { company_name: "Accenture" } } },
 ];
@@ -150,13 +151,13 @@ const CardContent = ({ children, className = "" }) => (
 
 const Button = ({ children, onClick, className = "", variant = "default", size = "default", disabled = false }) => {
   const baseClasses = "inline-flex items-center justify-center rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2";
-  const variantClasses = variant === "ghost" 
-    ? "hover:bg-gray-100 text-gray-700" 
+  const variantClasses = variant === "ghost"
+    ? "hover:bg-gray-100 text-gray-700"
     : variant === "outline"
-    ? "border border-gray-300 bg-white hover:bg-gray-50 text-gray-700"
-    : "bg-blue-600 text-white hover:bg-blue-700";
+      ? "border border-gray-300 bg-white hover:bg-gray-50 text-gray-700"
+      : "bg-blue-600 text-white hover:bg-blue-700";
   const sizeClasses = size === "sm" ? "px-3 py-1.5 text-sm" : size === "icon" ? "p-2" : "px-4 py-2";
-  
+
   return (
     <button
       onClick={onClick}
@@ -169,10 +170,10 @@ const Button = ({ children, onClick, className = "", variant = "default", size =
 };
 
 const Badge = ({ children, variant = "default", className = "" }) => {
-  const variantClasses = variant === "outline" 
+  const variantClasses = variant === "outline"
     ? "border border-gray-300 bg-white text-gray-700"
     : "bg-blue-100 text-blue-800";
-  
+
   return (
     <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${variantClasses} ${className}`}>
       {children}
@@ -222,9 +223,10 @@ const Icons = {
 };
 
 const PlacementHeadDashboard = () => {
+  const { signOut } = useAuth();
   const [currentPage, setCurrentPage] = useState("dashboard");
   const [isAnnouncementDialogOpen, setIsAnnouncementDialogOpen] = useState(false);
-  
+
   const [newAnnouncement, setNewAnnouncement] = useState({
     title: "",
     content: "",
@@ -256,10 +258,10 @@ const PlacementHeadDashboard = () => {
     applications.forEach((app) => {
       const companyName = app.job_postings?.company_profiles?.company_name;
       const student = app.student_profiles;
-      
+
       if (companyName && student) {
         const stats = companyStats.get(companyName);
-        
+
         if (student.is_placed && student.placed_company === companyName) {
           stats.placed++;
         } else if (app.status === 'applied' || app.status === 'under_review') {
@@ -294,7 +296,7 @@ const PlacementHeadDashboard = () => {
 
   const navItems = [
     { path: "dashboard", label: "Dashboard", icon: Icons.UserCog },
-    
+
   ];
 
   const placedStudents = students?.filter((s) => s.is_placed).length || 0;
@@ -321,11 +323,10 @@ const PlacementHeadDashboard = () => {
               <button
                 key={item.path}
                 onClick={() => setCurrentPage(item.path)}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  currentPage === item.path
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${currentPage === item.path
                     ? "bg-blue-600 text-white"
                     : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-                }`}
+                  }`}
               >
                 <div className="flex items-center gap-2">
                   <item.icon />
@@ -339,7 +340,7 @@ const PlacementHeadDashboard = () => {
             <Button variant="ghost" size="icon">
               <Icons.Bell />
             </Button>
-            <Button variant="ghost" className="gap-2">
+            <Button variant="ghost" className="gap-2" onClick={signOut}>
               <Icons.LogOut />
               <span className="hidden sm:inline">Sign Out</span>
             </Button>
@@ -358,7 +359,7 @@ const PlacementHeadDashboard = () => {
               Here's an overview of the placement activities
             </p>
           </div>
-          
+
           <Button className="gap-2" onClick={() => setIsAnnouncementDialogOpen(!isAnnouncementDialogOpen)}>
             <Icons.Megaphone />
             Create Announcement
@@ -409,9 +410,9 @@ const PlacementHeadDashboard = () => {
                   <Button type="submit" className="flex-1">
                     Create Announcement
                   </Button>
-                  <Button 
-                    type="button" 
-                    variant="outline" 
+                  <Button
+                    type="button"
+                    variant="outline"
                     onClick={() => setIsAnnouncementDialogOpen(false)}
                   >
                     Cancel
@@ -516,8 +517,8 @@ const PlacementHeadDashboard = () => {
                 <CardContent>
                   <div className="space-y-3 max-h-[500px] overflow-y-auto pr-2">
                     {placementStatsByCompany.map((stat, index) => (
-                      <div 
-                        key={stat.company} 
+                      <div
+                        key={stat.company}
                         className="p-4 rounded-lg border border-gray-200 bg-gray-50 hover:bg-gray-100 transition-colors"
                       >
                         <div className="flex items-start justify-between mb-3">
@@ -536,7 +537,7 @@ const PlacementHeadDashboard = () => {
                             #{index + 1}
                           </Badge>
                         </div>
-                        
+
                         <div className="grid grid-cols-2 gap-3">
                           <div className="bg-green-50 rounded-lg p-3 border border-green-200">
                             <div className="flex items-center gap-2 mb-1">
@@ -547,13 +548,13 @@ const PlacementHeadDashboard = () => {
                             </div>
                             <p className="text-2xl font-bold text-gray-900">{stat.placed}</p>
                             <p className="text-xs text-gray-600 mt-1">
-                              {stat.placed + stat.unplaced > 0 
+                              {stat.placed + stat.unplaced > 0
                                 ? `${Math.round((stat.placed / (stat.placed + stat.unplaced)) * 100)}%`
                                 : '0%'
                               } success rate
                             </p>
                           </div>
-                          
+
                           <div className="bg-amber-50 rounded-lg p-3 border border-amber-200">
                             <div className="flex items-center gap-2 mb-1">
                               <div className="text-amber-600">
@@ -588,20 +589,20 @@ const PlacementHeadDashboard = () => {
                       margin={{ top: 20, right: 30, left: 20, bottom: 100 }}
                     >
                       <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                      <XAxis 
-                        dataKey="company" 
+                      <XAxis
+                        dataKey="company"
                         angle={-45}
                         textAnchor="end"
                         height={120}
                         interval={0}
                         tick={{ fontSize: 11 }}
                       />
-                      <YAxis 
+                      <YAxis
                         label={{ value: 'Number of Students', angle: -90, position: 'insideLeft' }}
                       />
-                      <Tooltip 
-                        contentStyle={{ 
-                          backgroundColor: 'white', 
+                      <Tooltip
+                        contentStyle={{
+                          backgroundColor: 'white',
                           border: '1px solid #e5e7eb',
                           borderRadius: '8px'
                         }}
@@ -610,25 +611,25 @@ const PlacementHeadDashboard = () => {
                           return [value, label];
                         }}
                       />
-                      <Legend 
+                      <Legend
                         wrapperStyle={{ paddingTop: '20px' }}
                         iconType="circle"
                       />
-                      <Bar 
-                        dataKey="placed" 
-                        fill="#22c55e" 
+                      <Bar
+                        dataKey="placed"
+                        fill="#22c55e"
                         name="Placed Students"
                         radius={[8, 8, 0, 0]}
                       />
-                      <Bar 
-                        dataKey="unplaced" 
-                        fill="#f59e0b" 
+                      <Bar
+                        dataKey="unplaced"
+                        fill="#f59e0b"
                         name="Applied/Under Review"
                         radius={[8, 8, 0, 0]}
                       />
                     </BarChart>
                   </ResponsiveContainer>
-                  
+
                   <div className="mt-6 grid grid-cols-3 gap-4 pt-4 border-t border-gray-200">
                     <div className="text-center">
                       <p className="text-sm text-gray-600 mb-1">Total Companies</p>
